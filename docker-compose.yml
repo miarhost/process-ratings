@@ -1,0 +1,17 @@
+version: '3.1'
+
+services:
+  mongodb:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    env_file:
+    - .env
+    ports:
+    - 27017:27017
+    volumes:
+    - mongodb-data:/data
+    - ./docker/mongo/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+
+volumes:
+  mongodb-data:
