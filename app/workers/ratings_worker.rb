@@ -1,4 +1,5 @@
 
+require 'sneakers'
 class RatingsWorker < BasicWorker
   include MongoClient
 
