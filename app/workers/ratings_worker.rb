@@ -1,7 +1,9 @@
 
 require 'sneakers'
-class RatingsWorker < BasicWorker
+class RatingsWorker
+  include Sneakers::Worker
   include MongoClient
+  include SneakersLogging
 
   from_queue :predictions
 

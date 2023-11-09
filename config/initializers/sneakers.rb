@@ -1,23 +1,27 @@
 require 'sneakers'
 
-config = {:timeout_job_after => 5,
-        :prefetch => 10,
-        :threads => 10,
-        :env => ENV['RACK_ENV'],
-        :durable => true,
-        exchange_options: {
+config = {
+          vhost: '/',
+          timeout_job_after: 5,
+          prefetch:10,
+          threads: 10,
+          env: ENV['RACK_ENV'],
+          durable: true,
+          exchange_options: {
           type: 'direct',
           durable: true
-        },
-        queue_options:    {
-          durable: true
-        },
-        :ack => true,
-        :heartbeat => 2,
-        :exchange => 'snickers',
-        :exchange_type => :direct,
-        :hooks => {},
-        :start_worker_delay => 2}
+          },
+          queue_options:    {
+            durable: true
+          },
+          ack: true,
+          heartbeat: 2,
+          exchange: 'snickers',
+          exchange_type: :direct,
+          hooks: {},
+          workers: 1,
+          start_worker_delay: 2
+        }
 
 Sneakers.configure(config)
 
