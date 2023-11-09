@@ -27,7 +27,7 @@ development:
   username: postgres
   password: root
   host: localhost
-  port: 5432
+  port: 5433
   url: <%= ENV['DB_URL'] %>
 
   # The specified database role being used to connect to postgres.

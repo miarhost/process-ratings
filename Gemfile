@@ -16,6 +16,7 @@ gem 'redis-store'
 gem 'rack-cors'
 gem 'bson'
 gem 'mongo'
+gem 'whenever', require: false
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

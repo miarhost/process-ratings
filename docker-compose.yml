@@ -13,5 +13,64 @@ services:
     - mongodb-data:/data
     - ./docker/mongo/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
 
+  nginx:
+    image: nginx:1.14.2-alpine
+    ports:
+      - '8008:591'
+    volumes:
+      - ./nginx.conf.d:/etc/nginx/nginx.conf
+    networks:
+      - nginx_network_1
+
+  db:
+    image: postgres:latest
+    ports:
+    - 5433:5433
+    volumes:
+    - postgres-data:/var/lib/postgresql/data
+    env_file:
+    - .env
+
+  ratings_web:
+    build: ./
+    ports:
+    - 3002:3002
+    depends_on:
+    - db
+    - redis
+    env_file:
+    - .env
+    container_name: ratings_web
+    networks:
+    - nginx_network_1
+
+
+  redis:
+    image: redis:6.2.13
+    ports:
+    - 63791:63791
+    volumes:
+    - redis_data:/data
+    env_file:
+    - .env
+
+  rabbitmq:
+    image: rabbitmq:3.9.29-alpine
+    env_file:
+    - .env
+    ports:
+      - 5674:5674
+      - 15695:15695
+    volumes:
+    - rabbitmq:/var/lib/rabbitmq
+
 volumes:
   mongodb-data:
+  postgres-data:
+  redis_data:
+  rabbitmq:
+
+
+networks:
+  nginx_network_1:
+    external: true
