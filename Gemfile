@@ -16,7 +16,7 @@ gem 'redis-store'
 gem 'rack-cors'
 gem 'bson'
 gem 'mongo'
-gem 'mongoid', '~> 7.0.5'
+gem 'mongoid'
 gem 'whenever', require: false
 
 group :development, :test do

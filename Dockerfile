@@ -1,4 +1,4 @@
-FROM mongo:latest
+FROM mvertes/alpine-mongo
 WORKDIR /
 ENV MONGO_INITDB_ROOT_USERNAME admin-user
 ENV MONGO_INITDB_ROOT_PASSWORD admin-password
