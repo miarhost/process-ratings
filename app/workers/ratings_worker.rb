@@ -2,7 +2,7 @@
 require 'sneakers'
 class RatingsWorker
   include Sneakers::Worker
-  #include MongoClient
+  include MongoClient
   include SneakersLogging
 
   from_queue :predictions
@@ -12,6 +12,7 @@ class RatingsWorker
     ratings_list.result = JSON.parse(payload)
     ratings_list.received_at = Time.now
     ratings_list.save!
+    puts payload
     ack!
   end
 end
