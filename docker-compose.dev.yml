@@ -17,6 +17,29 @@ services:
     networks:
       - default
 
+  nginx:
+    image: nginx:1.14.2-alpine
+    ports:
+      - '8008:591'
+    volumes:
+      - ./nginx.conf.d:/etc/nginx/nginx.conf
+    networks:
+      - nginx_network_1
+
+  ratings_web:
+    build: ./
+    ports:
+    - 3002:3002
+    depends_on:
+    - mongodb
+
+    env_file:
+    - .env
+    container_name: ratings_web
+    networks:
+    - nginx_network_1
+
+
   redis:
     image: redis:6.2.13
     ports:
@@ -36,19 +59,13 @@ services:
     volumes:
     - rabbitmq:/var/lib/rabbitmq
 
-  ratings_web:
-    build: ./
-    ports:
-    - 3002:3002
-    depends_on:
-    - mongodb
-
-    env_file:
-    - .env
-    container_name: ratings_web
-
 volumes:
   mongodb-data:
   postgres-data:
   redis_data:
   rabbitmq:
+
+
+networks:
+  nginx_network_1:
+    external: true

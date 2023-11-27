@@ -32,9 +32,7 @@ end
 group :development do
   gem 'capistrano', '~> 3.17', require: false
   gem 'capistrano-rails'
-  gem 'capistrano-sidekiq'
   gem 'capistrano-puma'
-  gem 'capistrano-nginx'
   gem 'capistrano-linked-files'
   gem 'listen', '~> 3.2'
   gem 'spring'
