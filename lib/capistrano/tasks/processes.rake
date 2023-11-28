@@ -5,3 +5,4 @@ namespace :processes do
       execute "cd #{release_path} && RAILS_ENV=#{fetch(:production)} bundle exec rake sneakers:run"
     end
   end
+end
