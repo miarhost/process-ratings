@@ -19,3 +19,17 @@ db.ratings_list.insertOne(
     testRecord: 'Initial ratings record'
   }
 );
+
+db = db.getSiblingDB('mg-test')
+db.createUser(
+  {
+    user: 'test',
+    pwd: 'test',
+    roles: [
+      {
+        role: "readWrite",
+        db: 'mg-test'
+      }
+    ]
+  }
+);

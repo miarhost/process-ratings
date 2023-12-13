@@ -8,3 +8,10 @@ development:
       min_pool_size: 1
       max_pool_size: 10
   options:
+
+test:
+  clients:
+    default:
+      uri: "mongodb://test:test@localhost:27017/mg-test"
+      max_pool_size: 1
+  options:
