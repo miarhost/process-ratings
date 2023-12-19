@@ -1,4 +1,5 @@
 require 'sneakers'
+require 'sneakers/metrics/logging_metrics'
 
 config = {
           vhost: '/',
@@ -15,12 +16,14 @@ config = {
             durable: true
           },
           ack: true,
-          heartbeat: 2,
+          heartbeat: 1,
           exchange: 'snickers',
           exchange_type: :direct,
           hooks: {},
-          workers: 1,
-          start_worker_delay: 2
+          workers: 4,
+          start_worker_delay: 1,
+          metrics: Sneakers::Metrics::LoggingMetrics.new,
+          log: 'log/sneakers.log'
         }
 
 Sneakers.configure(config)

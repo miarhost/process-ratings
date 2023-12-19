@@ -2,16 +2,17 @@ require 'sneakers'
 module SneakersLogging
 extend Sneakers::Worker
 
-  def logging(payload, delivery_info)
-    message = "Successfully delivered  at #{delivery_info[:routing_key]}:
-    #{payload}"
+  def logging(payload, delivery_info, metadata)
+    message = "Successfully delivered  at #{delivery_info[:routing_key]}: \n
+    payload: #{payload}. \n
+    metadata: #{metadata}"
 
-    Sneakers::Logger.error(message)
+    Sneakers.logger.info(message)
   end
 
-  def error_messaging(e, metadata)
+  def error_messaging(e, delivery_info)
     message = "#{e} stopped delivering at #{delivery_info[:routing_key]}"
 
-    Sneakers::Logger.info(message)
+    Sneakers.logger.error(message)
   end
 end
