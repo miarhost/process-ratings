@@ -10,8 +10,12 @@ class IndRatesCollectWorker
     collection = JSON.parse(payload)
     collection.each do |key, value|
       rate = UploadUserRate.new
-      rate.value = value
+      rate.payload = value
       rate.received_at = Time.now
+      rate.user_id = value['user'][0].to_i
+      rate.item_id = value['upload'][0].to_i
+      rate.value = value['rate'][0].to_i
+      rate.item_type = value.keys[0].capitalize
       rate.save!
     end
     ack!
