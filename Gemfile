@@ -10,6 +10,7 @@ gem 'bootsnap', '>= 1.4.2', require: false
 gem 'dotenv'
 gem 'bunny'
 gem 'sneakers'
+gem 'faraday'
 gem 'redis', '~> 4.0'
 gem 'redis-rails'
 gem 'redis-store'

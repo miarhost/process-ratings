@@ -99,6 +99,10 @@ GEM
       railties (>= 5.0.0)
     faker (3.2.1)
       i18n (>= 1.8.11, < 2)
+    faraday (2.7.10)
+      faraday-net_http (>= 2.0, < 3.1)
+      ruby2_keywords (>= 0.0.4)
+    faraday-net_http (3.0.2)
     ffi (1.16.3)
     globalid (1.1.0)
       activesupport (>= 5.0)
@@ -222,6 +226,7 @@ GEM
       rspec-mocks (~> 3.9.0)
       rspec-support (~> 3.9.0)
     rspec-support (3.9.4)
+    ruby2_keywords (0.0.5)
     serverengine (2.0.7)
       sigdump (~> 0.2.2)
     set (1.0.3)
@@ -282,6 +287,7 @@ DEPENDENCIES
   dotenv
   factory_bot_rails
   faker
+  faraday
   listen (~> 3.2)
   mongo
   mongoid
