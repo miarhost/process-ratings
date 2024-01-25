@@ -20,7 +20,7 @@ config = {
           exchange: 'snickers',
           exchange_type: :direct,
           hooks: {},
-          workers: 4,
+          workers: 7,
           start_worker_delay: 1,
           metrics: Sneakers::Metrics::LoggingMetrics.new,
           log: 'log/sneakers.log'

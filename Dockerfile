@@ -5,7 +5,7 @@ RUN apk --update add build-base git postgresql-dev postgresql-client tzdata imag
 WORKDIR /app
 COPY Gemfile* ./
 
-RUN gem install bundler && bundle install
+RUN gem install bundler -v 2.4.22 && bundle install
 ADD . /app
 
 FROM mongo:latest

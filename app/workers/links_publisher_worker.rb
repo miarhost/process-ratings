@@ -1,10 +1,10 @@
 require 'sneakers'
-require 'faraday'
 class LinksPublisherWorker
   include Sneakers::Worker
+  include MongoClient
   include SneakersLogging
 
-  from_queue :parsed, threads: 25, prefetch: 25, timeout_job_after: 1
+  from_queue :parsed, threads: 11, prefetch: 11, timeout_job_after: 1
 
   def work_with_params(_message, delivery_info, metadata)
     data = ParsedList.last.document.take(5)
