@@ -1,16 +1,16 @@
 require 'sneakers'
 require 'faraday'
-class LinksParserWorker
+class Parsers::LinkParserWorker
   include Sneakers::Worker
   include MongoClient
   include SneakersLogging
 
-  from_queue :parsing, threads: 50, prefetch: 50, timeout_job_after: 1
+  from_queue 'parsing.link', threads: 15, prefetch: 15, timeout_job_after: 1
 
   def work_with_params(message, delivery_info, metadata)
     data = JSON.parse(message)
     worker_trace "received #{data} at #{Time.now}"
-    links_list = save_to_list_record(scrap(data), data["url"], data["topic"])
+    links_list = save_to_list_record(scrap(data),url(data), data["topic"])
     logging(data, delivery_info, metadata)
 
   rescue => e
@@ -18,8 +18,12 @@ class LinksParserWorker
     ack!
   end
 
+  def url(data)
+    data['url']
+  end
+
   def scrap(data)
-    resource = Faraday.get(data["url"])
+    resource = Faraday.get(url(data))
     doc = Nokogiri::HTML(resource.body)
     links = []
     attrs = doc.css('div.download')

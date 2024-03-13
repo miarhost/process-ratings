@@ -32,3 +32,5 @@
 **.keep
 
 settings.json
+
+app/constants/links.rb

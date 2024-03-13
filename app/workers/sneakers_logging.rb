@@ -14,5 +14,6 @@ extend Sneakers::Worker
     message = "#{e} stopped delivering at #{delivery_info[:routing_key]}"
 
     Sneakers.logger.error(message)
+    Sneakers.logger.error(e.backtrace)
   end
 end
