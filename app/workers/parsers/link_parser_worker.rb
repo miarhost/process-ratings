@@ -10,7 +10,7 @@ class Parsers::LinkParserWorker
   def work_with_params(message, delivery_info, metadata)
     data = JSON.parse(message)
     worker_trace "received #{data} at #{Time.now}"
-    links_list = save_to_list_record(scrap(data),url(data), data["topic"])
+    save_to_list_record(scrap(data), url(data), data["topic"])
     logging(data, delivery_info, metadata)
 
   rescue => e

@@ -1,42 +1,42 @@
 require 'sneakers'
 require 'faraday'
-class Parsers::TopicParserWorker < Parsers::LinkParserWorker
+class Parsers::TopicParserWorker
   include Sneakers::Worker
   include MongoClient
   include SneakersLogging
 
-  from_queue 'parsing.topic', threads: 15, prefetch: 15, timeout_job_after: 1
+  from_queue 'parsing.topics', threads: 15, prefetch: 15, timeout_job_after: 1
 
   def work_with_params(message, delivery_info, metadata)
     data = JSON.parse(message)
     worker_trace "received #{data} at #{Time.now}"
-    if payload_has_topics?
+    if payload_has_topics?(data)
       save_to_list_record(scrap(data), data)
     end
     logging(data, delivery_info, metadata)
+    ack!
 
   rescue => e
     error_messaging(e, delivery_info)
-    ack!
   end
 
-  payload_has_topics?(data)
+  def payload_has_topics?(data)
     data['topics'] != 'undefined' && data['additional_topics']
   end
 
-  def called_topics
-    data['topics'] != 'undefined' ?  data['topics'] : data['additional_topics']
+  def called_topics(data)
+    data['topics'] != 'undefined' ? data['topics'] : data['additional_topics']
   end
 
 
   def urls(topics)
     urls = []
-    topics.all { |plus| urls << Links::EDU + plus + "/MostRecent" }
+    topics.each { |plus| urls << Links::EDU + plus + "/MostRecent" }
     urls
   end
 
   def scrap(data)
-    resources = urls(called_topics)
+    resources = urls(called_topics(data))
     links = []
     recources.each do |page|
       resource = Faraday.get(page)
@@ -53,9 +53,9 @@ class Parsers::TopicParserWorker < Parsers::LinkParserWorker
   def save_to_list_record(links, data)
     TopicList.create!(
       document: links,
-      main_url: url(data),
+      urls: urls(called_topics(data)),
+      topics: called_topics(data),
       parsed_at: Time.now,
-      topic: data['topic'],
       rate: data['rate'],
       user: data['user']
     )

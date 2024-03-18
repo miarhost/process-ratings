@@ -5,7 +5,7 @@ describe LinksPublisherWorker, type: :worker do
     'https://example_2.com?download%params',
     'https://example_3.com?download%params'] }
 
-  let(:routing_key) { 'parsed' }
+  let(:routing_key) { 'parsed.links' }
   let(:metadata) { {:content_type=>"application/octet-stream", :delivery_mode=>2, :priority=>0}}
   let(:worker_processed_good) { described_class.new.work_with_params('', { routing_key: routing_key }, metadata)}
 

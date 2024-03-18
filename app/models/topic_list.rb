@@ -1,9 +1,9 @@
 class TopicList
   include Mongoid::Document
   field :document, type: Array
-  field :main_url, type: String
+  field :urls, type: Array
+  field :topics, type: Array
   field :parsed_at, type: DateTime
-  field :topic, type: String
   field :rate, type: Integer
   field :user, type: Integer
 end
