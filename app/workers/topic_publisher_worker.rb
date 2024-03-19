@@ -1,10 +1,11 @@
 require 'sneakers'
 class TopicPublisherWorker < LinksPublisherWorker
+  from_queue 'parsed.topics', threads: 11, prefetch: 11, timeout_job_after: 1
   def data
     TopicList.last.document
   end
 
-  def queue
+  def publish_queue
     'parsed.topics'
   end
 end
