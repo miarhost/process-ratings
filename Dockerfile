@@ -8,13 +8,5 @@ COPY Gemfile* ./
 RUN gem install bundler && bundle install
 ADD . /app
 
-FROM mongo:latest
-WORKDIR /
-ENV MONGO_INITDB_ROOT_USERNAME admin-user
-ENV MONGO_INITDB_ROOT_PASSWORD admin-password
-ENV MONGO_INITDB_DATABASE admin
-
-ADD ./docker/mongo/mongo-init.js /docker-entrypoint-initdb.d/
-
-CMD ["mongod"]
-EXPOSE 20217
+CMD ["bundle","exec","puma","-C","config/puma.rb"]
+EXPOSE 3002

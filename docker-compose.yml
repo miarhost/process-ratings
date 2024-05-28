@@ -4,7 +4,7 @@ services:
   mongodb:
     build:
       context: .
-      dockerfile: ./Dockerfile
+      dockerfile: mongo.dockerfile
     platform: linux/amd64
     restart: always
     env_file:
@@ -37,7 +37,9 @@ services:
     - rabbitmq:/var/lib/rabbitmq
 
   ratings_web:
-    build: ./
+    build:
+      context: .
+      dockerfile: ./Dockerfile
     ports:
     - 3002:3002
     depends_on:
