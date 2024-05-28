@@ -18,7 +18,7 @@ services:
       - default
 
   redis:
-    image: redis:6.2.13
+    image: redis:7.2.5-alpine
     ports:
     - 63791:63791
     volumes:
@@ -27,7 +27,7 @@ services:
     - .env
 
   rabbitmq:
-    image: rabbitmq:3.9.29-alpine
+    image: rabbitmq:3.13-alpine
     env_file:
     - .env
     ports:
@@ -53,7 +53,7 @@ services:
     - mongodb
     - rabbitmq
     volumes:
-    - .docker/sneakers.sh:/docker-entrypoint-initdb.d/sneakers.sh:ro
+    - ./docker/sneakers.sh:/docker-entrypoint-initdb.d/sneakers.sh:ro
 
 
 volumes:

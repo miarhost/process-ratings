@@ -1,11 +1,11 @@
 
 
-FROM ruby:2.7.1-alpine
+FROM ruby:3.2.1-alpine
 RUN apk --update add build-base git postgresql-dev postgresql-client tzdata imagemagick
 WORKDIR /app
 COPY Gemfile* ./
 
-RUN gem install bundler -v 2.4.22 && bundle install
+RUN gem install bundler && bundle install
 ADD . /app
 
 FROM mongo:latest
