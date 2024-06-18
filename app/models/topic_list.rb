@@ -6,4 +6,5 @@ class TopicList
   field :parsed_at, type: DateTime
   field :rate, type: Integer
   field :user, type: Integer
+  field :origin, type: String
 end

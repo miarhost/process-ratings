@@ -57,7 +57,8 @@ class Parsers::TopicParserWorker
       topics: called_topics(data),
       parsed_at: Time.now,
       rate: data['rate'],
-      user: data['user']
+      user: data['user'],
+      origin: data['origin']
     )
   end
 end
