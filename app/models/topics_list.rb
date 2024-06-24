@@ -1,4 +1,7 @@
-class TopicList
+require 'sneakers'
+require 'sneakers/runner'
+class TopicsList
+
   include Mongoid::Document
   field :document, type: Array
   field :urls, type: Array
@@ -7,4 +10,10 @@ class TopicList
   field :rate, type: Integer
   field :user, type: Integer
   field :origin, type: String
+
+  after_create :publish_payload
+
+  def publish_payload
+    Sneakers::Runner.new([ TopicPublisherWorker ])
+  end
 end

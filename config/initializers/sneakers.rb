@@ -23,8 +23,8 @@ config = {
           workers: 7,
           start_worker_delay: 1,
           metrics: Sneakers::Metrics::LoggingMetrics.new,
-          log: 'log/sneakers.log',
-          daemonize: true
+          log: 'log/sneakers.log'
+          #daemonize: true
         }
 
 Sneakers.configure(config)

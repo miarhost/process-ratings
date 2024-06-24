@@ -21,11 +21,11 @@ class Parsers::TopicParserWorker
   end
 
   def payload_has_topics?(data)
-    data['topics'] != 'undefined' && data['additional_topics']
+    data['topics'] != 'undefined' && data['subtopics']
   end
 
   def called_topics(data)
-    data['topics'] != 'undefined' ? data['topics'] : data['additional_topics']
+    data['topics'] != 'undefined' ? data['topics'] : data['subtopics']
   end
 
 
@@ -38,7 +38,7 @@ class Parsers::TopicParserWorker
   def scrap(data)
     resources = urls(called_topics(data))
     links = []
-    recources.each do |page|
+    resources.each do |page|
       resource = Faraday.get(page)
       doc = Nokogiri::HTML(resource.body)
 
@@ -51,7 +51,7 @@ class Parsers::TopicParserWorker
   end
 
   def save_to_list_record(links, data)
-    TopicList.create!(
+    TopicsList.create!(
       document: links,
       urls: urls(called_topics(data)),
       topics: called_topics(data),
