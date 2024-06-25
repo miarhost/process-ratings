@@ -1,5 +1,4 @@
 require 'sneakers'
-require 'sneakers/runner'
 class TopicsList
 
   include Mongoid::Document
@@ -11,9 +10,16 @@ class TopicsList
   field :user, type: Integer
   field :origin, type: String
 
-  after_create :publish_payload
+  after_create do |model|
+    publish_payload(model)
+  end
 
-  def publish_payload
-    Sneakers::Runner.new([ TopicPublisherWorker ])
+  protected
+
+  def publish_payload(model)
+    delivery_info = {routing_key: 'parsed.links'}
+    metadata = { content_type: "application/octet-stream", delivery_mode: 2, priority: 0 }
+    LinksPublisherWorker.new('parsed.links', 'snickers')
+      .work_with_params(model[:urls], delivery_info, metadata)
   end
 end
