@@ -21,7 +21,7 @@ class Parsers::TopicParserWorker
   end
 
   def payload_has_topics?(data)
-    data['topics'] != 'undefined' && data['subtopics']
+    data['topics'] && data['topics'] != 'undefined' || data['subtopics']
   end
 
   def called_topics(data)
