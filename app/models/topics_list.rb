@@ -20,6 +20,6 @@ class TopicsList
     delivery_info = {routing_key: 'parsed.links'}
     metadata = { content_type: 'application/json', delivery_mode: 2, priority: 2 }
     LinksPublisherWorker.new('parsed.links', 'snickers')
-      .work_with_params(model[:urls], delivery_info, metadata)
+      .work_with_params(model[:document].to_json, delivery_info, metadata)
   end
 end
