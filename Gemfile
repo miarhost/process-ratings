@@ -21,13 +21,17 @@ gem 'mongoid'
 gem 'whenever', require: false
 
 group :development, :test do
-  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'faker'
   gem 'factory_bot_rails'
-  gem 'rspec-rails', '~> 3.0'
+  gem 'rspec-rails', '~> 6.0', '>= 6.0.3'
+  gem 'webmock'
+end
+
+group :test do
   gem 'shoulda-matchers'
   gem 'rspec-json_expectations'
-  gem 'webmock'
+  gem 'mongoid-rspec'
 end
 
 group :development do
